@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kuis Master Keliling Bangun Datar - 40 Soal Essay</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Nunito', sans-serif;
+            background-color: #f8fafc;
+        }
+        h1, h2, h3, .font-heading {
+            font-family: 'Fredoka', sans-serif;
+        }
+    </style>
+</head>
+<body class="text-slate-800 antialiased min-h-screen flex flex-col justify-between">
+
+    <header class="bg-emerald-600 text-white shadow-lg sticky top-0 z-50">
+        <div class="max-w-5xl mx-auto px-4 py-4 flex flex-col sm:flex-row justify-between items-center">
+            <div class="flex items-center space-x-3 mb-2 sm:mb-0">
+                <span class="text-3xl">📝✨</span>
+                <div>
+                    <h1 class="text-xl sm:text-2xl font-bold tracking-wide">Kuis Tantangan 40 Soal: Sisi Hilang</h1>
+                    <p class="text-xs text-emerald-100">Kelas 4 SD - Penilaian Mandiri Keliling Bangun Datar</p>
+                </div>
+            </div>
+            <div class="flex items-center space-x-3">
+                <div class="bg-emerald-700 px-3 py-1.5 rounded-full text-xs font-bold border border-emerald-500">
+                    Terisi: <span id="answered-count">0</span> / 40
+                </div>
+                <button onclick="resetQuiz()" class="bg-amber-500 hover:bg-amber-600 text-white px-3 py-1.5 rounded-full text-xs font-bold transition shadow-sm">Reset Semua</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-4xl mx-auto px-4 py-8 flex-grow w-full space-y-8">
+
+        <!-- Intro Card -->
+        <div class="bg-white rounded-3xl p-6 shadow-sm border border-emerald-100 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div>
+                <h2 class="text-lg font-bold text-emerald-900">Uji Kemampuanmu Tanpa Ragu!</h2>
+                <p class="text-sm text-slate-600 mt-1">Isi jawaban berupa angka saja (satuan sentimeter/meter sudah otomatis). Jawabanmu aman tersimpan otomatis meskipun halaman tidak sengaja tertutup atau ter-reload!</p>
+            </div>
+            <div class="bg-emerald-50 p-4 rounded-2xl border border-emerald-100 text-center shrink-0">
+                <div class="text-2xl font-black text-emerald-700" id="progress-percent">0%</div>
+                <div class="text-xs text-emerald-800 font-bold uppercase tracking-wider">Penyelesaian</div>
+            </div>
+        </div>
+
+        <!-- Question Container -->
+        <div id="quiz-container" class="bg-white rounded-3xl p-6 sm:p-8 shadow-sm border border-emerald-100 space-y-6">
+            <!-- Rendered via JavaScript -->
+        </div>
+
+        <!-- Navigation Buttons -->
+        <div class="flex justify-between items-center pt-2">
+            <button onclick="prevQuestion()" id="prev-btn" class="px-5 py-2.5 bg-white border border-slate-300 hover:bg-slate-50 text-slate-700 font-bold rounded-2xl shadow-sm transition disabled:opacity-40 disabled:cursor-not-allowed">
+                ← Sebelumnya
+            </button>
+            <div class="text-xs font-bold text-slate-500">
+                Soal <span id="current-q-num">1</span> dari 40
+            </div>
+            <button onclick="nextQuestion()" id="next-btn" class="px-5 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-2xl shadow-sm transition">
+                Selanjutnya →
+            </button>
+        </div>
+
+        <!-- Question Jump Grid Drawer (Hidden as requested) -->
+        <div class="hidden bg-white rounded-3xl p-6 shadow-sm border border-emerald-100 space-y-3">
+            <h3 class="text-sm font-bold text-slate-700 uppercase tracking-wider">Navigasi Cepat Nomor Soal:</h3>
+            <div id="jump-grid" class="grid grid-cols-8 sm:grid-cols-10 gap-2">
+                <!-- Generated via JS -->
+            </div>
+        </div>
+
+    </main>
+
+    <footer class="bg-slate-900 text-slate-400 py-6 mt-16 text-center text-sm">
+        <p>✨ Kuis Interaktif Sisi Hilang Bangun Datar - SD Kelas 4 🇮🇩</p>
+    </footer>
+
+    <script>
+        // Data 40 Soal Essay dengan SVG yang diperbesar dan keterangan sisi yang sangat jelas menunjuk ke ruas garis gambar
+        const questionsData = [
+            // PERSEGI (1 - 6)
+            { id: 1, shape: "persegi", title: "Mencari Sisi Persegi", text: "Sebuah ubin berbentuk persegi memiliki Keliling 36 cm. Berapa cm panjang sisi ubin tersebut?", answer: 9, svg: '<rect x="45" y="45" width="130" height="130" fill="#a7f3d0" stroke="#059669" stroke-width="4" rx="6"/><text x="110" y="30" font-size="13" text-anchor="middle" fill="#065f46" font-weight="bold">s = ? (Atas)</text><text x="110" y="193" font-size="13" text-anchor="middle" fill="#065f46" font-weight="bold">s (Bawah)</text><text x="25" y="115" font-size="13" text-anchor="middle" fill="#065f46" font-weight="bold" transform="rotate(-90 25 115)">s (Kiri)</text><text x="195" y="115" font-size="13" text-anchor="middle" fill="#065f46" font-weight="bold" transform="rotate(90 195 115)">s (Kanan)</text>' },
+            { id: 2, shape: "persegi", title: "Mencari Sisi Persegi", text: "Sebuah lapangan rumput berbentuk persegi memiliki Keliling 60 meter. Berapa panjang sisi lapangan tersebut?", answer: 15, svg: '<rect x="45" y="45" width="130" height="130" fill="#a7f3d0" stroke="#059669" stroke-width="4" rx="6"/><text x="110" y="30" font-size="13" text-anchor="middle" fill="#065f46" font-weight="bold">s = ? (Atas)</text><text x="110" y="193" font-size="13" text-anchor="middle" fill="#065f46" font-weight="bold">s (Bawah)</text><text x="25" y="115" font-size="13" text-anchor="middle" fill="#065f46" font-weight="bold" transform="rotate(-90 25 115)">s (Kiri)</text><text x="195" y="115" font-size="13" text-anchor="middle" fill="#065f46" font-weight="bold" transform="rotate(90 195 115)">s (Kanan)</text>' },
+            { id: 3, shape: "persegi", title: "Mencari Sisi Persegi", text: "Bingkai foto berbentuk persegi memiliki Keliling 84 cm. Berapa cm sisi bingkai foto tersebut?", answer: 21, svg: '<rect x="45" y="45" width="130" height="130" fill="#a7f3d0" stroke="#059669" stroke-width="4" rx="6"/><text x="110" y="30" font-size="13" text-anchor="middle" fill="#065f46" font-weight="bold">s = ? (Atas)</text><text x="110" y="193" font-size="13" text-anchor="middle" fill="#065f46" font-weight="bold">s (Bawah)</text><text x="25" y="115" font-size="13" text-anchor="middle" fill="#065f46" font-weight="bold" transform="rotate(-90 25 115)">s (Kiri)</text><text x="195" y="115" font-size="13" text-anchor="middle" fill="#065f46" font-weight="bold" transform="rotate(90 195 115)">s (Kanan)</text>' },
+            { id: 4, shape: "persegi", title: "Mencari Sisi Persegi", text: "Kardus mainan berbentuk persegi dengan Keliling 100 cm. Berapa cm panjang sisinya?", answer: 25, svg: '<rect x="45" y="45" width="130" height="130" fill="#a7f3d0" stroke="#059669" stroke-width="4" rx="6"/><text x="110" y="30" font-size="13" text-anchor="middle" fill="#065f46" font-weight="bold">s = ? (Atas)</text><text x="110" y="193" font-size="13" text-anchor="middle" fill="#065f46" font-weight="bold">s (Bawah)</text><text x="25" y="115" font-size="13" text-anchor="middle" fill="#065f46" font-weight="bold" transform="rotate(-90 25 115)">s (Kiri)</text><text x="195" y="115" font-size="13" text-anchor="middle" fill="#065f46" font-weight="bold" transform="rotate(90 195 115)">s (Kanan)</text>' },
+            { id: 5, shape: "persegi", title: "Mencari Sisi Persegi", text: "Lantai keramik berbentuk persegi mempunyai Keliling 48 cm. Berapa panjang sisinya?", answer: 12, svg: '<rect x="45" y="45" width="130" height="130" fill="#a7f3d0" stroke="#059669" stroke-width="4" rx="6"/><text x="110" y="30" font-size="13" text-anchor="middle" fill="#065f46" font-weight="bold">s = ? (Atas)</text><text x="110" y="193" font-size="13" text-anchor="middle" fill="#065f46" font-weight="bold">s (Bawah)</text><text x="25" y="115" font-size="13" text-anchor="middle" fill="#065f46" font-weight="bold" transform="rotate(-90 25 115)">s (Kiri)</text><text x="195" y="115" font-size="13" text-anchor="middle" fill="#065f46" font-weight="bold" transform="rotate(90 195 115)">s (Kanan)</text>' },
+            { id: 6, shape: "persegi", title: "Mencari Sisi Persegi", text: "Taman bunga berbentuk persegi dengan Keliling 120 meter. Berapa meter panjang sisinya?", answer: 30, svg: '<rect x="45" y="45" width="130" height="130" fill="#a7f3d0" stroke="#059669" stroke-width="4" rx="6"/><text x="110" y="30" font-size="13" text-anchor="middle" fill="#065f46" font-weight="bold">s = ? (Atas)</text><text x="110" y="193" font-size="13" text-anchor="middle" fill="#065f46" font-weight="bold">s (Bawah)</text><text x="25" y="115" font-size="13" text-anchor="middle" fill="#065f46" font-weight="bold" transform="rotate(-90 25 115)">s (Kiri)</text><text x="195" y="115" font-size="13" text-anchor="middle" fill="#065f46" font-weight="bold" transform="rotate(90 195 115)">s (Kanan)</text>' },
+
+            // PERSEGI PANJANG (7 - 12)
+            { id: 7, shape: "persegi_panjang", title: "Mencari Lebar Persegi Panjang", text: "Sebuah papan tulis berbentuk persegi panjang memiliki Keliling 300 cm dan Panjang 90 cm. Berapa cm lebarnya?", answer: 60, svg: '<rect x="35" y="50" width="150" height="110" fill="#bae6fd" stroke="#0284c7" stroke-width="4" rx="6"/><text x="110" y="35" font-size="13" text-anchor="middle" fill="#0369a1" font-weight="bold">Panjang = 90 cm</text><text x="110" y="178" font-size="13" text-anchor="middle" fill="#0369a1" font-weight="bold">Panjang = 90 cm</text><text x="15" y="105" font-size="13" text-anchor="middle" fill="#0369a1" font-weight="bold" transform="rotate(-90 15 105)">Lebar = ?</text><text x="205" y="105" font-size="13" text-anchor="middle" fill="#0369a1" font-weight="bold" transform="rotate(90 205 105)">Lebar = ?</text>' },
+            { id: 8, shape: "persegi_panjang", title: "Mencari Lebar Persegi Panjang", text: "Meja belajar memiliki Keliling 140 cm dan Panjang 40 cm. Berapa cm lebar meja tersebut?", answer: 30, svg: '<rect x="35" y="50" width="150" height="110" fill="#bae6fd" stroke="#0284c7" stroke-width="4" rx="6"/><text x="110" y="35" font-size="13" text-anchor="middle" fill="#0369a1" font-weight="bold">Panjang = 40 cm</text><text x="110" y="178" font-size="13" text-anchor="middle" fill="#0369a1" font-weight="bold">Panjang = 40 cm</text><text x="15" y="105" font-size="13" text-anchor="middle" fill="#0369a1" font-weight="bold" transform="rotate(-90 15 105)">Lebar = ?</text><text x="205" y="105" font-size="13" text-anchor="middle" fill="#0369a1" font-weight="bold" transform="rotate(90 205 105)">Lebar = ?</text>' },
+            { id: 9, shape: "persegi_panjang", title: "Mencari Panjang Persegi Panjang", text: "Pintu kamar berbentuk persegi panjang dengan Keliling 500 cm dan Lebar 100 cm. Berapa cm panjang pintu tersebut?", answer: 150, svg: '<rect x="35" y="50" width="150" height="110" fill="#bae6fd" stroke="#0284c7" stroke-width="4" rx="6"/><text x="110" y="35" font-size="13" text-anchor="middle" fill="#0369a1" font-weight="bold">Panjang = ?</text><text x="110" y="178" font-size="13" text-anchor="middle" fill="#0369a1" font-weight="bold">Panjang = ?</text><text x="15" y="105" font-size="13" text-anchor="middle" fill="#0369a1" font-weight="bold" transform="rotate(-90 15 105)">Lebar = 100</text><text x="205" y="105" font-size="13" text-anchor="middle" fill="#0369a1" font-weight="bold" transform="rotate(90 205 105)">Lebar = 100</text>' },
+            { id: 10, shape: "persegi_panjang", title: "Mencari Lebar Persegi Panjang", text: "Lapangan basket memiliki Keliling 80 meter dan Panjang 25 meter. Berapa meter lebar lapangan tersebut?", answer: 15, svg: '<rect x="35" y="50" width="150" height="110" fill="#bae6fd" stroke="#0284c7" stroke-width="4" rx="6"/><text x="110" y="35" font-size="13" text-anchor="middle" fill="#0369a1" font-weight="bold">Panjang = 25 m</text><text x="110" y="178" font-size="13" text-anchor="middle" fill="#0369a1" font-weight="bold">Panjang = 25 m</text><text x="15" y="105" font-size="13" text-anchor="middle" fill="#0369a1" font-weight="bold" transform="rotate(-90 15 105)">Lebar = ?</text><text x="205" y="105" font-size="13" text-anchor="middle" fill="#0369a1" font-weight="bold" transform="rotate(90 205 105)">Lebar = ?</text>' },
+            { id: 11, shape: "persegi_panjang", title: "Mencari Panjang Persegi Panjang", text: "Karpet lantai mempunyai Keliling 600 cm dan Lebar 120 cm. Berapa cm panjang karpet tersebut?", answer: 180, svg: '<rect x="35" y="50" width="150" height="110" fill="#bae6fd" stroke="#0284c7" stroke-width="4" rx="6"/><text x="110" y="35" font-size="13" text-anchor="middle" fill="#0369a1" font-weight="bold">Panjang = ?</text><text x="110" y="178" font-size="13" text-anchor="middle" fill="#0369a1" font-weight="bold">Panjang = ?</text><text x="15" y="105" font-size="13" text-anchor="middle" fill="#0369a1" font-weight="bold" transform="rotate(-90 15 105)">Lebar = 120</text><text x="205" y="105" font-size="13" text-anchor="middle" fill="#0369a1" font-weight="bold" transform="rotate(90 205 105)">Lebar = 120</text>' },
+            { id: 12, shape: "persegi_panjang", title: "Mencari Lebar Persegi Panjang", text: "Buku gambar memiliki Keliling 90 cm dan Panjang 30 cm. Berapa cm lebar buku tersebut?", answer: 15, svg: '<rect x="35" y="50" width="150" height="110" fill="#bae6fd" stroke="#0284c7" stroke-width="4" rx="6"/><text x="110" y="35" font-size="13" text-anchor="middle" fill="#0369a1" font-weight="bold">Panjang = 30 cm</text><text x="110" y="178" font-size="13" text-anchor="middle" fill="#0369a1" font-weight="bold">Panjang = 30 cm</text><text x="15" y="105" font-size="13" text-anchor="middle" fill="#0369a1" font-weight="bold" transform="rotate(-90 15 105)">Lebar = ?</text><text x="205" y="105" font-size="13" text-anchor="middle" fill="#0369a1" font-weight="bold" transform="rotate(90 205 105)">Lebar = ?</text>' },
+
+            // SEGITIGA (13 - 18)
+            { id: 13, shape: "segitiga", title: "Mencari Sisi Ketiga Segitiga", text: "Sebuah penggaris segitiga memiliki Keliling 35 cm. Sisi pertama = 12 cm dan sisi kedua = 12 cm. Berapa cm sisi ketiga?", answer: 11, svg: '<polygon points="110,20 30,180 190,180" fill="#fde68a" stroke="#d97706" stroke-width="4" stroke-linejoin="round"/><text x="110" y="198" font-size="13" text-anchor="middle" fill="#b45309" font-weight="bold">Sisi 3 = ? (Bawah)</text><text x="52" y="95" font-size="12" text-anchor="middle" fill="#b45309" font-weight="bold" transform="rotate(-62 52 95)">Sisi 1 = 12</text><text x="168" y="95" font-size="12" text-anchor="middle" fill="#b45309" font-weight="bold" transform="rotate(62 168 95)">Sisi 2 = 12</text>' },
+            { id: 14, shape: "segitiga", title: "Mencari Sisi Ketiga Segitiga", text: "Tenda pramuka segitiga memiliki Keliling 24 meter. Sisi 1 = 8 meter dan sisi 2 = 8 meter. Berapa meter sisi ketiganya?", answer: 8, svg: '<polygon points="110,20 30,180 190,180" fill="#fde68a" stroke="#d97706" stroke-width="4" stroke-linejoin="round"/><text x="110" y="198" font-size="13" text-anchor="middle" fill="#b45309" font-weight="bold">Sisi 3 = ? (Bawah)</text><text x="52" y="95" font-size="12" text-anchor="middle" fill="#b45309" font-weight="bold" transform="rotate(-62 52 95)">Sisi 1 = 8 m</text><text x="168" y="95" font-size="12" text-anchor="middle" fill="#b45309" font-weight="bold" transform="rotate(62 168 95)">Sisi 2 = 8 m</text>' },
+            { id: 15, shape: "segitiga", title: "Mencari Sisi Ketiga Segitiga", text: "Sebuah rambu lalu lintas segitiga memiliki Keliling 150 cm. Sisi 1 = 50 cm dan sisi 2 = 50 cm. Berapa cm sisi ketiganya?", answer: 50, svg: '<polygon points="110,20 30,180 190,180" fill="#fde68a" stroke="#d97706" stroke-width="4" stroke-linejoin="round"/><text x="110" y="198" font-size="13" text-anchor="middle" fill="#b45309" font-weight="bold">Sisi 3 = ? (Bawah)</text><text x="52" y="95" font-size="12" text-anchor="middle" fill="#b45309" font-weight="bold" transform="rotate(-62 52 95)">Sisi 1 = 50</text><text x="168" y="95" font-size="12" text-anchor="middle" fill="#b45309" font-weight="bold" transform="rotate(62 168 95)">Sisi 2 = 50</text>' },
+            { id: 16, shape: "segitiga", title: "Mencari Sisi Ketiga Segitiga", text: "Segitiga sembarang mempunyai Keliling 45 cm. Sisi 1 = 15 cm dan sisi 2 = 18 cm. Berapa cm sisi ketiganya?", answer: 12, svg: '<polygon points="110,20 30,180 190,180" fill="#fde68a" stroke="#d97706" stroke-width="4" stroke-linejoin="round"/><text x="110" y="198" font-size="13" text-anchor="middle" fill="#b45309" font-weight="bold">Sisi 3 = ? (Bawah)</text><text x="52" y="95" font-size="12" text-anchor="middle" fill="#b45309" font-weight="bold" transform="rotate(-62 52 95)">Sisi 1 = 15</text><text x="168" y="95" font-size="12" text-anchor="middle" fill="#b45309" font-weight="bold" transform="rotate(62 168 95)">Sisi 2 = 18</text>' },
+            { id: 17, shape: "segitiga", title: "Mencari Sisi Ketiga Segitiga", text: "Penggaris segitiga siku-siku dengan Keliling 60 cm. Sisi 1 = 20 cm dan sisi 2 = 25 cm. Berapa cm sisi ketiganya?", answer: 15, svg: '<polygon points="110,20 30,180 190,180" fill="#fde68a" stroke="#d97706" stroke-width="4" stroke-linejoin="round"/><text x="110" y="198" font-size="13" text-anchor="middle" fill="#b45309" font-weight="bold">Sisi 3 = ? (Bawah)</text><text x="52" y="95" font-size="12" text-anchor="middle" fill="#b45309" font-weight="bold" transform="rotate(-62 52 95)">Sisi 1 = 20</text><text x="168" y="95" font-size="12" text-anchor="middle" fill="#b45309" font-weight="bold" transform="rotate(62 168 95)">Sisi 2 = 25</text>' },
+            { id: 18, shape: "segitiga", title: "Mencari Sisi Ketiga Segitiga", text: "Panji kain segitiga memiliki Keliling 70 cm. Sisi 1 = 22 cm dan sisi 2 = 23 cm. Berapa cm sisi ketiganya?", answer: 25, svg: '<polygon points="110,20 30,180 190,180" fill="#fde68a" stroke="#d97706" stroke-width="4" stroke-linejoin="round"/><text x="110" y="198" font-size="13" text-anchor="middle" fill="#b45309" font-weight="bold">Sisi 3 = ? (Bawah)</text><text x="52" y="95" font-size="12" text-anchor="middle" fill="#b45309" font-weight="bold" transform="rotate(-62 52 95)">Sisi 1 = 22</text><text x="168" y="95" font-size="12" text-anchor="middle" fill="#b45309" font-weight="bold" transform="rotate(62 168 95)">Sisi 2 = 23</text>' },
+
+            // JAJAR GENJANG (19 - 24)
+            { id: 19, shape: "jajar_genjang", title: "Mencari Sisi b Jajar Genjang", text: "Jajar genjang memiliki Keliling 50 cm dan sisi a = 15 cm. Berapa cm panjang sisi b yang hilang?", answer: 10, svg: '<polygon points="55,45 185,45 155,155 25,155" fill="#fed7aa" stroke="#c2410c" stroke-width="4" stroke-linejoin="round"/><text x="120" y="30" font-size="12" text-anchor="middle" fill="#9a3412" font-weight="bold">Sisi a = 15 cm</text><text x="120" y="172" font-size="12" text-anchor="middle" fill="#9a3412" font-weight="bold">Sisi a = 15 cm</text><text x="32" y="105" font-size="12" text-anchor="middle" fill="#9a3412" font-weight="bold" transform="rotate(-72 32 105)">Sisi b = ?</text><text x="182" y="105" font-size="12" text-anchor="middle" fill="#9a3412" font-weight="bold" transform="rotate(72 182 105)">Sisi b = ?</text>' },
+            { id: 20, shape: "jajar_genjang", title: "Mencari Sisi b Jajar Genjang", text: "Jajar genjang memiliki Keliling 80 cm dan sisi a = 25 cm. Berapa cm sisi b?", answer: 15, svg: '<polygon points="55,45 185,45 155,155 25,155" fill="#fed7aa" stroke="#c2410c" stroke-width="4" stroke-linejoin="round"/><text x="120" y="30" font-size="12" text-anchor="middle" fill="#9a3412" font-weight="bold">Sisi a = 25 cm</text><text x="120" y="172" font-size="12" text-anchor="middle" fill="#9a3412" font-weight="bold">Sisi a = 25 cm</text><text x="32" y="105" font-size="12" text-anchor="middle" fill="#9a3412" font-weight="bold" transform="rotate(-72 32 105)">Sisi b = ?</text><text x="182" y="105" font-size="12" text-anchor="middle" fill="#9a3412" font-weight="bold" transform="rotate(72 182 105)">Sisi b = ?</text>' },
+            { id: 21, shape: "jajar_genjang", title: "Mencari Sisi b Jajar Genjang", text: "Jajar genjang mempunyai Keliling 64 cm dan sisi a = 18 cm. Berapa cm sisi b?", answer: 14, svg: '<polygon points="55,45 185,45 155,155 25,155" fill="#fed7aa" stroke="#c2410c" stroke-width="4" stroke-linejoin="round"/><text x="120" y="30" font-size="12" text-anchor="middle" fill="#9a3412" font-weight="bold">Sisi a = 18 cm</text><text x="120" y="172" font-size="12" text-anchor="middle" fill="#9a3412" font-weight="bold">Sisi a = 18 cm</text><text x="32" y="105" font-size="12" text-anchor="middle" fill="#9a3412" font-weight="bold" transform="rotate(-72 32 105)">Sisi b = ?</text><text x="182" y="105" font-size="12" text-anchor="middle" fill="#9a3412" font-weight="bold" transform="rotate(72 182 105)">Sisi b = ?</text>' },
+            { id: 22, shape: "jajar_genjang", title: "Mencari Sisi b Jajar Genjang", text: "Jajar genjang dengan Keliling 100 cm dan sisi a = 35 cm. Berapa cm sisi b?", answer: 15, svg: '<polygon points="55,45 185,45 155,155 25,155" fill="#fed7aa" stroke="#c2410c" stroke-width="4" stroke-linejoin="round"/><text x="120" y="30" font-size="12" text-anchor="middle" fill="#9a3412" font-weight="bold">Sisi a = 35 cm</text><text x="120" y="172" font-size="12" text-anchor="middle" fill="#9a3412" font-weight="bold">Sisi a = 35 cm</text><text x="32" y="105" font-size="12" text-anchor="middle" fill="#9a3412" font-weight="bold" transform="rotate(-72 32 105)">Sisi b = ?</text><text x="182" y="105" font-size="12" text-anchor="middle" fill="#9a3412" font-weight="bold" transform="rotate(72 182 105)">Sisi b = ?</text>' },
+            { id: 23, shape: "jajar_genjang", title: "Mencari Sisi b Jajar Genjang", text: "Jajar genjang berukuran Keliling 44 cm dan sisi a = 12 cm. Berapa cm sisi b?", answer: 10, svg: '<polygon points="55,45 185,45 155,155 25,155" fill="#fed7aa" stroke="#c2410c" stroke-width="4" stroke-linejoin="round"/><text x="120" y="30" font-size="12" text-anchor="middle" fill="#9a3412" font-weight="bold">Sisi a = 12 cm</text><text x="120" y="172" font-size="12" text-anchor="middle" fill="#9a3412" font-weight="bold">Sisi a = 12 cm</text><text x="32" y="105" font-size="12" text-anchor="middle" fill="#9a3412" font-weight="bold" transform="rotate(-72 32 105)">Sisi b = ?</text><text x="182" y="105" font-size="12" text-anchor="middle" fill="#9a3412" font-weight="bold" transform="rotate(72 182 105)">Sisi b = ?</text>' },
+            { id: 24, shape: "jajar_genjang", title: "Mencari Sisi b Jajar Genjang", text: "Jajar genjang berukuran Keliling 70 cm dan sisi a = 20 cm. Berapa cm sisi b?", answer: 15, svg: '<polygon points="55,45 185,45 155,155 25,155" fill="#fed7aa" stroke="#c2410c" stroke-width="4" stroke-linejoin="round"/><text x="120" y="30" font-size="12" text-anchor="middle" fill="#9a3412" font-weight="bold">Sisi a = 20 cm</text><text x="120" y="172" font-size="12" text-anchor="middle" fill="#9a3412" font-weight="bold">Sisi a = 20 cm</text><text x="32" y="105" font-size="12" text-anchor="middle" fill="#9a3412" font-weight="bold" transform="rotate(-72 32 105)">Sisi b = ?</text><text x="182" y="105" font-size="12" text-anchor="middle" fill="#9a3412" font-weight="bold" transform="rotate(72 182 105)">Sisi b = ?</text>' },
+
+            // TRAPESIUM (25 - 30)
+            { id: 25, shape: "trapesium", title: "Mencari Sisi d Trapesium", text: "Trapesium memiliki Keliling 40 cm. Sisi a = 8 cm, b = 12 cm, c = 10 cm. Berapa cm sisi d yang hilang?", answer: 10, svg: '<polygon points="65,30 155,30 185,170 35,170" fill="#e9d5ff" stroke="#7e22ce" stroke-width="4" stroke-linejoin="round"/><text x="110" y="18" font-size="12" text-anchor="middle" fill="#6b21a8" font-weight="bold">Sisi a = 8</text><text x="110" y="188" font-size="12" text-anchor="middle" fill="#6b21a8" font-weight="bold">Sisi b = 12</text><text x="40" y="100" font-size="12" text-anchor="middle" fill="#6b21a8" font-weight="bold" transform="rotate(-75 40 100)">c = 10</text><text x="180" y="100" font-size="12" text-anchor="middle" fill="#6b21a8" font-weight="bold" transform="rotate(75 180 100)">d = ?</text>' },
+            { id: 26, shape: "trapesium", title: "Mencari Sisi d Trapesium", text: "Trapesium memiliki Keliling 55 cm. Sisi a = 10 cm, b = 15 cm, c = 12 cm. Berapa cm sisi d?", answer: 18, svg: '<polygon points="65,30 155,30 185,170 35,170" fill="#e9d5ff" stroke="#7e22ce" stroke-width="4" stroke-linejoin="round"/><text x="110" y="18" font-size="12" text-anchor="middle" fill="#6b21a8" font-weight="bold">Sisi a = 10</text><text x="110" y="188" font-size="12" text-anchor="middle" fill="#6b21a8" font-weight="bold">Sisi b = 15</text><text x="40" y="100" font-size="12" text-anchor="middle" fill="#6b21a8" font-weight="bold" transform="rotate(-75 40 100)">c = 12</text><text x="180" y="100" font-size="12" text-anchor="middle" fill="#6b21a8" font-weight="bold" transform="rotate(75 180 100)">d = ?</text>' },
+            { id: 27, shape: "trapesium", title: "Mencari Sisi d Trapesium", text: "Trapesium memiliki Keliling 60 cm. Sisi a = 12 cm, b = 18 cm, c = 14 cm. Berapa cm sisi d?", answer: 16, svg: '<polygon points="65,30 155,30 185,170 35,170" fill="#e9d5ff" stroke="#7e22ce" stroke-width="4" stroke-linejoin="round"/><text x="110" y="18" font-size="12" text-anchor="middle" fill="#6b21a8" font-weight="bold">Sisi a = 12</text><text x="110" y="188" font-size="12" text-anchor="middle" fill="#6b21a8" font-weight="bold">Sisi b = 18</text><text x="40" y="100" font-size="12" text-anchor="middle" fill="#6b21a8" font-weight="bold" transform="rotate(-75 40 100)">c = 14</text><text x="180" y="100" font-size="12" text-anchor="middle" fill="#6b21a8" font-weight="bold" transform="rotate(75 180 100)">d = ?</text>' },
+            { id: 28, shape: "trapesium", title: "Mencari Sisi d Trapesium", text: "Trapesium memiliki Keliling 75 cm. Sisi a = 15 cm, b = 25 cm, c = 15 cm. Berapa cm sisi d?", answer: 20, svg: '<polygon points="65,30 155,30 185,170 35,170" fill="#e9d5ff" stroke="#7e22ce" stroke-width="4" stroke-linejoin="round"/><text x="110" y="18" font-size="12" text-anchor="middle" fill="#6b21a8" font-weight="bold">Sisi a = 15</text><text x="110" y="188" font-size="12" text-anchor="middle" fill="#6b21a8" font-weight="bold">Sisi b = 25</text><text x="40" y="100" font-size="12" text-anchor="middle" fill="#6b21a8" font-weight="bold" transform="rotate(-75 40 100)">c = 15</text><text x="180" y="100" font-size="12" text-anchor="middle" fill="#6b21a8" font-weight="bold" transform="rotate(75 180 100)">d = ?</text>' },
+            { id: 29, shape: "trapesium", title: "Mencari Sisi d Trapesium", text: "Trapesium memiliki Keliling 50 cm. Sisi a = 10 cm, b = 14 cm, c = 11 cm. Berapa cm sisi d?", answer: 15, svg: '<polygon points="65,30 155,30 185,170 35,170" fill="#e9d5ff" stroke="#7e22ce" stroke-width="4" stroke-linejoin="round"/><text x="110" y="18" font-size="12" text-anchor="middle" fill="#6b21a8" font-weight="bold">Sisi a = 10</text><text x="110" y="188" font-size="12" text-anchor="middle" fill="#6b21a8" font-weight="bold">Sisi b = 14</text><text x="40" y="100" font-size="12" text-anchor="middle" fill="#6b21a8" font-weight="bold" transform="rotate(-75 40 100)">c = 11</text><text x="180" y="100" font-size="12" text-anchor="middle" fill="#6b21a8" font-weight="bold" transform="rotate(75 180 100)">d = ?</text>' },
+            { id: 30, shape: "trapesium", title: "Mencari Sisi d Trapesium", text: "Trapesium memiliki Keliling 80 cm. Sisi a = 18 cm, b = 22 cm, c = 18 cm. Berapa cm sisi d?", answer: 22, svg: '<polygon points="65,30 155,30 185,170 35,170" fill="#e9d5ff" stroke="#7e22ce" stroke-width="4" stroke-linejoin="round"/><text x="110" y="18" font-size="12" text-anchor="middle" fill="#6b21a8" font-weight="bold">Sisi a = 18</text><text x="110" y="188" font-size="12" text-anchor="middle" fill="#6b21a8" font-weight="bold">Sisi b = 22</text><text x="40" y="100" font-size="12" text-anchor="middle" fill="#6b21a8" font-weight="bold" transform="rotate(-75 40 100)">c = 18</text><text x="180" y="100" font-size="12" text-anchor="middle" fill="#6b21a8" font-weight="bold" transform="rotate(75 180 100)">d = ?</text>' },
+
+            // BELAH KETUPAT (31 - 35)
+            { id: 31, shape: "belah_ketupat", title: "Mencari Sisi Belah Ketupat", text: "Belah ketupat memiliki Keliling 48 cm. Berapa cm panjang sisinya?", answer: 12, svg: '<polygon points="110,15 195,100 110,185 25,100" fill="#ccfbf1" stroke="#0d9488" stroke-width="4" stroke-linejoin="round"/><text x="110" y="105" font-size="13" text-anchor="middle" fill="#0f766e" font-weight="bold">Semua Sisi = ?</text>' },
+            { id: 32, shape: "belah_ketupat", title: "Mencari Sisi Belah Ketupat", text: "Belah ketupat memiliki Keliling 60 cm. Berapa cm panjang sisinya?", answer: 15, svg: '<polygon points="110,15 195,100 110,185 25,100" fill="#ccfbf1" stroke="#0d9488" stroke-width="4" stroke-linejoin="round"/><text x="110" y="105" font-size="13" text-anchor="middle" fill="#0f766e" font-weight="bold">Semua Sisi = ?</text>' },
+            { id: 33, shape: "belah_ketupat", title: "Mencari Sisi Belah Ketupat", text: "Belah ketupat memiliki Keliling 84 cm. Berapa cm panjang sisinya?", answer: 21, svg: '<polygon points="110,15 195,100 110,185 25,100" fill="#ccfbf1" stroke="#0d9488" stroke-width="4" stroke-linejoin="round"/><text x="110" y="105" font-size="13" text-anchor="middle" fill="#0f766e" font-weight="bold">Semua Sisi = ?</text>' },
+            { id: 34, shape: "belah_ketupat", title: "Mencari Sisi Belah Ketupat", text: "Belah ketupat memiliki Keliling 100 cm. Berapa cm panjang sisinya?", answer: 25, svg: '<polygon points="110,15 195,100 110,185 25,100" fill="#ccfbf1" stroke="#0d9488" stroke-width="4" stroke-linejoin="round"/><text x="110" y="105" font-size="13" text-anchor="middle" fill="#0f766e" font-weight="bold">Semua Sisi = ?</text>' },
+            { id: 35, shape: "belah_ketupat", title: "Mencari Sisi Belah Ketupat", text: "Belah ketupat memiliki Keliling 76 cm. Berapa cm panjang sisinya?", answer: 19, svg: '<polygon points="110,15 195,100 110,185 25,100" fill="#ccfbf1" stroke="#0d9488" stroke-width="4" stroke-linejoin="round"/><text x="110" y="105" font-size="13" text-anchor="middle" fill="#0f766e" font-weight="bold">Semua Sisi = ?</text>' },
+
+            // LAYANG-LAYANG (36 - 40)
+            { id: 36, shape: "layang_layang", title: "Mencari Sisi b Layang-layang", text: "Layang-layang memiliki Keliling 54 cm dan sisi a = 10 cm. Berapa cm sisi b yang hilang?", answer: 17, svg: '<polygon points="110,15 175,75 110,195 45,75" fill="#fbcfe8" stroke="#db2777" stroke-width="4" stroke-linejoin="round"/><text x="63" y="55" font-size="12" text-anchor="middle" fill="#be185d" font-weight="bold" transform="rotate(-43 63 55)">Sisi a = 10</text><text x="157" y="55" font-size="12" text-anchor="middle" fill="#be185d" font-weight="bold" transform="rotate(43 157 55)">Sisi a = 10</text><text x="63" y="145" font-size="12" text-anchor="middle" fill="#be185d" font-weight="bold" transform="rotate(43 63 145)">Sisi b = ?</text><text x="157" y="145" font-size="12" text-anchor="middle" fill="#be185d" font-weight="bold" transform="rotate(-43 157 145)">Sisi b = ?</text>' },
+            { id: 37, shape: "layang_layang", title: "Mencari Sisi b Layang-layang", text: "Layang-layang memiliki Keliling 70 cm dan sisi a = 15 cm. Berapa cm sisi b?", answer: 20, svg: '<polygon points="110,15 175,75 110,195 45,75" fill="#fbcfe8" stroke="#db2777" stroke-width="4" stroke-linejoin="round"/><text x="63" y="55" font-size="12" text-anchor="middle" fill="#be185d" font-weight="bold" transform="rotate(-43 63 55)">Sisi a = 15</text><text x="157" y="55" font-size="12" text-anchor="middle" fill="#be185d" font-weight="bold" transform="rotate(43 157 55)">Sisi a = 15</text><text x="63" y="145" font-size="12" text-anchor="middle" fill="#be185d" font-weight="bold" transform="rotate(43 63 145)">Sisi b = ?</text><text x="157" y="145" font-size="12" text-anchor="middle" fill="#be185d" font-weight="bold" transform="rotate(-43 157 145)">Sisi b = ?</text>' },
+            { id: 38, shape: "layang_layang", title: "Mencari Sisi b Layang-layang", text: "Layang-layang memiliki Keliling 80 cm dan sisi a = 18 cm. Berapa cm sisi b?", answer: 22, svg: '<polygon points="110,15 175,75 110,195 45,75" fill="#fbcfe8" stroke="#db2777" stroke-width="4" stroke-linejoin="round"/><text x="63" y="55" font-size="12" text-anchor="middle" fill="#be185d" font-weight="bold" transform="rotate(-43 63 55)">Sisi a = 18</text><text x="157" y="55" font-size="12" text-anchor="middle" fill="#be185d" font-weight="bold" transform="rotate(43 157 55)">Sisi a = 18</text><text x="63" y="145" font-size="12" text-anchor="middle" fill="#be185d" font-weight="bold" transform="rotate(43 63 145)">Sisi b = ?</text><text x="157" y="145" font-size="12" text-anchor="middle" fill="#be185d" font-weight="bold" transform="rotate(-43 157 145)">Sisi b = ?</text>' },
+            { id: 39, shape: "layang_layang", title: "Mencari Sisi b Layang-layang", text: "Layang-layang memiliki Keliling 60 cm dan sisi a = 12 cm. Berapa cm sisi b?", answer: 18, svg: '<polygon points="110,15 175,75 110,195 45,75" fill="#fbcfe8" stroke="#db2777" stroke-width="4" stroke-linejoin="round"/><text x="63" y="55" font-size="12" text-anchor="middle" fill="#be185d" font-weight="bold" transform="rotate(-43 63 55)">Sisi a = 12</text><text x="157" y="55" font-size="12" text-anchor="middle" fill="#be185d" font-weight="bold" transform="rotate(43 157 55)">Sisi a = 12</text><text x="63" y="145" font-size="12" text-anchor="middle" fill="#be185d" font-weight="bold" transform="rotate(43 63 145)">Sisi b = ?</text><text x="157" y="145" font-size="12" text-anchor="middle" fill="#be185d" font-weight="bold" transform="rotate(-43 157 145)">Sisi b = ?</text>' },
+            { id: 40, shape: "layang_layang", title: "Mencari Sisi b Layang-layang", text: "Layang-layang memiliki Keliling 90 cm dan sisi a = 20 cm. Berapa cm sisi b?", answer: 25, svg: '<polygon points="110,15 175,75 110,195 45,75" fill="#fbcfe8" stroke="#db2777" stroke-width="4" stroke-linejoin="round"/><text x="63" y="55" font-size="12" text-anchor="middle" fill="#be185d" font-weight="bold" transform="rotate(-43 63 55)">Sisi a = 20</text><text x="157" y="55" font-size="12" text-anchor="middle" fill="#be185d" font-weight="bold" transform="rotate(43 157 55)">Sisi a = 20</text><text x="63" y="145" font-size="12" text-anchor="middle" fill="#be185d" font-weight="bold" transform="rotate(43 63 145)">Sisi b = ?</text><text x="157" y="145" font-size="12" text-anchor="middle" fill="#be185d" font-weight="bold" transform="rotate(-43 157 145)">Sisi b = ?</text>' }
+        ];
+
+        let currentIndex = 0;
+        let userAnswers = JSON.parse(localStorage.getItem('quiz_keliling_answers')) || {};
+
+        function initQuiz() {
+            renderJumpGrid();
+            loadQuestion(currentIndex);
+            updateProgress();
+        }
+
+        function loadQuestion(index) {
+            currentIndex = index;
+            const q = questionsData[index];
+            const container = document.getElementById('quiz-container');
+            const savedVal = userAnswers[q.id] !== undefined ? userAnswers[q.id] : '';
+
+            container.innerHTML = `
+                <div class="flex flex-col md:flex-row items-center gap-6">
+                    <div class="w-56 h-56 flex items-center justify-center bg-slate-50 border border-slate-200 rounded-2xl shrink-0 p-2 overflow-hidden shadow-inner">
+                        <svg width="210" height="210" viewBox="0 0 220 220">
+                            ${q.svg}
+                        </svg>
+                    </div>
+                    <div class="space-y-3 flex-grow w-full">
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs font-bold text-emerald-700 bg-emerald-100 px-3 py-1 rounded-full uppercase">${q.shape.replace('_', ' ')}</span>
+                            <span class="text-xs text-slate-400 font-semibold">Soal No. ${q.id} dari 40</span>
+                        </div>
+                        <h3 class="text-lg font-bold text-slate-800">${q.title}</h3>
+                        <p class="text-slate-600 text-sm sm:text-base">${q.text}</p>
+                    </div>
+                </div>
+                <div class="pt-4 border-t border-slate-100 space-y-3">
+                    <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider">Jawaban Kamu (Angka Saja):</label>
+                    <div class="flex gap-3 items-center">
+                        <input type="number" id="answer-input" value="${savedVal}" oninput="handleInput(${q.id}, this.value)" placeholder="Ketik angka..." class="w-full sm:w-1/2 px-4 py-3 border border-slate-300 rounded-2xl text-base font-bold focus:outline-none focus:ring-2 focus:ring-emerald-500 shadow-sm">
+                        <span id="instant-feedback" class="text-sm font-bold"></span>
+                    </div>
+                </div>
+            `;
+
+            if(savedVal !== '') {
+                validateInstant(q.id, savedVal);
+            }
+
+            document.getElementById('current-q-num').textContent = q.id;
+            document.getElementById('prev-btn').disabled = currentIndex === 0;
+            document.getElementById('next-btn').textContent = currentIndex === questionsData.length - 1 ? 'Selesai ✨' : 'Selanjutnya →';
+            
+            updateJumpGridActive();
+        }
+
+        function handleInput(qId, val) {
+            userAnswers[qId] = val;
+            localStorage.setItem('quiz_keliling_answers', JSON.stringify(userAnswers));
+            validateInstant(qId, val);
+            updateProgress();
+            renderJumpGrid();
+        }
+
+        function validateInstant(qId, val) {
+            const feedback = document.getElementById('instant-feedback');
+            if(val.trim() === '') {
+                feedback.innerHTML = '';
+                return;
+            }
+
+            const q = questionsData.find(item => item.id === qId);
+            const numVal = parseFloat(val);
+
+            if(numVal === q.answer) {
+                feedback.className = "text-sm font-bold text-emerald-600 bg-emerald-50 px-3 py-2 rounded-xl border border-emerald-200 animate-pulse";
+                feedback.innerHTML = "✅ Benar!";
+            } else {
+                feedback.className = "text-sm font-bold text-rose-600 bg-rose-50 px-3 py-2 rounded-xl border border-rose-200";
+                feedback.innerHTML = "❌ Kurang tepat, coba cek lagi.";
+            }
+        }
+
+        function nextQuestion() {
+            if(currentIndex < questionsData.length - 1) {
+                loadQuestion(currentIndex + 1);
+            } else {
+                alert("🎉 Selamat! Kamu telah melihat dan mengisi seluruh 40 soal kuis sisi hilang bangun datar!");
+            }
+        }
+
+        function prevQuestion() {
+            if(currentIndex > 0) {
+                loadQuestion(currentIndex - 1);
+            }
+        }
+
+        function jumpTo(index) {
+            loadQuestion(index);
+        }
+
+        function renderJumpGrid() {
+            const grid = document.getElementById('jump-grid');
+            grid.innerHTML = '';
+            questionsData.forEach((q, idx) => {
+                const isAnswered = userAnswers[q.id] !== undefined && userAnswers[q.id] !== '';
+                const isCorrect = isAnswered && parseFloat(userAnswers[q.id]) === q.answer;
+                
+                let bgClass = "bg-slate-100 text-slate-700 hover:bg-slate-200 border-slate-200";
+                if(isAnswered) {
+                    bgClass = isCorrect ? "bg-emerald-500 text-white border-emerald-600" : "bg-amber-500 text-white border-amber-600";
+                }
+                if(idx === currentIndex) {
+                    bgClass += " ring-2 ring-emerald-700 ring-offset-2";
+                }
+
+                const btn = document.createElement('button');
+                btn.className = `py-2 rounded-xl text-xs font-bold border transition ${bgClass}`;
+                btn.textContent = q.id;
+                btn.onclick = () => jumpTo(idx);
+                grid.appendChild(btn);
+            });
+        }
+
+        function updateJumpGridActive() {
+            renderJumpGrid();
+        }
+
+        function updateProgress() {
+            const answeredCount = Object.values(userAnswers).filter(val => val !== '').length;
+            document.getElementById('answered-count').textContent = answeredCount;
+            const percent = Math.round((answeredCount / 40) * 100);
+            document.getElementById('progress-percent').textContent = percent + '%';
+        }
+
+        function resetQuiz() {
+            if(confirm("Apakah kamu yakin ingin mereset seluruh jawaban kuis?")) {
+                userAnswers = {};
+                localStorage.removeItem('quiz_keliling_answers');
+                loadQuestion(0);
+                updateProgress();
+                renderJumpGrid();
+            }
+        }
+
+        window.onload = initQuiz;
+    </script>
+</body>
+</html>
